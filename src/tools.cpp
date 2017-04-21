@@ -1,10 +1,11 @@
 #include <iostream>
 #include "tools.h"
 
-using namespace std;
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
+using std::cout;
+using std::endl;
 
 Tools::Tools() {}
 
@@ -22,30 +23,27 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
     // check the validity of the following inputs:
     //  * the estimation vector size should not be zero
     //  * the estimation vector size should equal ground truth vector size
-    // ... your code here
     if (estimations.size() != ground_truth.size()
         || estimations.size() == 0) {
         cout << "Invalid estimation or ground_truth data" << endl;
         return rmse;
     }
-
+    //cout << "size of estimations.size() " << estimations.size()<< endl;
     //accumulate squared residuals
-    for (int i = 0; i < estimations.size(); ++i) {
-        // ... your code here
+    for (unsigned int i = 0; i < estimations.size(); ++i) {
 
         VectorXd residual = estimations[i] - ground_truth[i];
-
+        //cout << "residual = estimations[i] - ground_truth[i]   "<< endl << residual << endl;
         //coefficient-wise multiplication
         residual = residual.array() * residual.array();
         rmse += residual;
     }
 
     //calculate the mean
-    // ... your code here
     rmse = rmse / estimations.size();
 
+
     //calculate the squared root
-    // ... your code here
     rmse = rmse.array().sqrt();
 
     //return the result
@@ -69,7 +67,6 @@ MatrixXd Tools::CalculateJacobian(const VectorXd &x_state) {
     float vx = x_state(2);
     float vy = x_state(3);
 
-    //YOUR CODE HERE
     //pre-compute a set of terms to avoid repeated calculation
     /**
      * c3 = c1^1 * c2^0.5 = c3^1.5 <-> c3^3/2
