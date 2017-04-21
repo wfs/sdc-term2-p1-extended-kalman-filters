@@ -75,7 +75,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
         if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
             /**
-            Convert radar from polar to cartesian coordinates and initialize state.
+             * Convert radar from polar to cartesian coordinates and initialize state.
+             * See Polar <-> Cartesian Coordinates - http://www.mathsisfun.com/polar-cartesian-coordinates.html
             */
             double px_cart = measurement_pack.raw_measurements_[0] *
                              cos(measurement_pack.raw_measurements_[1]);  // rho * cos(phi)
