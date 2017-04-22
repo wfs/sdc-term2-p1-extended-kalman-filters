@@ -1,0 +1,8 @@
+andrew@andrew-Alienware-Aurora-R5:~/dev/term2/sdc-term2-p1-extended-kalman-filters/cmake-build-debug$ ./ExtendedKF -r console -d yes --order lex -# [#test_ekf]
+0.000 s:     Then: RMSE is <= project rubic
+0.000 s:     When: the EKF pipeline runs
+0.000 s:    Given: input and output files of Lidar and Radar measurements exist
+0.000 s: Scenario: Term 2 Project 1 EKF test RMSE of Estimation VS Ground Truth meets rubic.
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+

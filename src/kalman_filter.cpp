@@ -112,18 +112,23 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
      * Convert radar from polar to cartesian coordinates and initialize state.
      */
     double rho = sqrt(x_[0] * x_[0] + x_[1] * x_[1]);
-    //double phi = atan(x_[1]/x_[0]);
+    //double phi = atan(x_[1] / x_[0]);  // non-normalised bearing.
     double phi = atan2((x_[1] + M_1_PI), x_[0]);  // normalise bearing 'phi' between -pi and pi.
     //double rho_dot = (x_[0] * x_[2] + x_[1] * x_[3]) / sqrt(x_[0] * x_[0] + x_[1] * x_[1]);
     double new_rho = rho;
-    if (new_rho < 1e-6) new_rho = 1e-6;
+    if (new_rho < 1e-6) new_rho = 1e-6;  // replace 0 values with .00001
     double rho_dot = (x_[0] * x_[2] + x_[1] * x_[3]) / new_rho;
 
-    //out << " rho, phi, rho_dot  " << rho << phi << rho_dot<< ::endl;
+    //cout << "rho : " << rho << " phi : " << phi << " rho_dot : " << rho_dot << endl;
+    //cout << " phi : " << phi << endl;
     //MatrixXd z_pred_radar(3, 1);
     VectorXd z_pred_radar(3);
     z_pred_radar << rho, phi, rho_dot;
     VectorXd y_ = z - z_pred_radar;
+
+    // Normalising angels - https://discussions.udacity.com/t/rmse-value-to-high-for-new-data-file/241643/6?u=andrew22
+    //while (y_[1] < -M_PI) y_[1] += 2 * M_PI;
+    //while (y_[1] > M_PI) y_[1] -= 2 * M_PI;
 
     MatrixXd Ht = H_.transpose();
 

@@ -181,7 +181,16 @@ int main(int argc, char *argv[]) {
 
     // compute the accuracy (RMSE)
     Tools tools;
-    cout << "Accuracy - RMSE:" << endl << tools.CalculateRMSE(estimations, ground_truth) << endl;
+    VectorXd result;
+    //cout << "RMSE" << endl << tools.CalculateRMSE(estimations, ground_truth) << endl;
+
+    result = tools.CalculateRMSE(estimations, ground_truth);
+
+    cout << "RMSE" << endl;
+    for (int i = 0; i < 4; ++i) {
+        string s = to_string(result[i]);
+        cout << s.substr(0, 4) << endl;
+    }
 
     // close files
     if (out_file_.is_open()) {
